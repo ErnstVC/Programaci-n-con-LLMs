@@ -1,1 +1,16 @@
 
+Problema 4: Optimización de un Clasificador SVM
+Tienes un conjunto de datos y quieres usar una Máquina de Soporte Vectorial (SVC). Sin embargo, no sabes qué valor de C (regularización) o qué kernel funcionará mejor. En lugar de probar a mano, debes automatizar la búsqueda.
+Tu Misión:
+Escribe una función llamada optimizar_svm_grid(X, y) que utilice Pandas, Numpy y Sklearn para:
+1.	Definir la rejilla (Grid): Crea un diccionario de parámetros para probar:
+	C: [0.1, 1, 10]
+	kernel: ['linear', 'rbf']
+2.	Búsqueda Exhaustiva: Utiliza GridSearchCV con 3 particiones de validación cruzada (cv=3) para encontrar la mejor combinación.
+3.	Entrenamiento: Ajusta el objeto GridSearchCV a los datos X e y.
+4.	Resultado: La función debe devolver un diccionario con:
+	El mejor conjunto de parámetros encontrados (best_params_).
+  La mejor puntuación de precisión obtenida (best_score_).
+	El modelo final ya entrenado con esos mejores parámetros.
+
+
