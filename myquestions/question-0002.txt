@@ -1,1 +1,12 @@
 
+Problema 2 : Reducción de Dimensionalidad por Relevancia
+Recibes un conjunto de datos con muchísimas columnas (características), pero sospechas que muchas de ellas son ruido o no aportan información útil para predecir el objetivo. Entrenar un modelo con todas ellas causaría overfitting y lentitud.
+Tu Misión:
+Escribe una función llamada seleccionar_mejores_caracteristicas(df, target_col, k=3) que utilice Pandas, Numpy y Sklearn para realizar lo siguiente:
+1.	Preparación: Separa el DataFrame en la matriz de características X (numéricas) y el vector objetivo y.
+2.	Limpieza: Rellena los valores nulos de X con el valor 0 (asumiendo que la ausencia de dato significa ausencia de actividad).
+3.	Selección: Utiliza la clase SelectKBest junto con la métrica f_regression de sklearn.feature_selection para identificar las k mejores características que tienen mayor relación estadística con el target.
+4.	Transformación: Aplica la selección para obtener una nueva matriz X reducida.
+5.	Resultado: Devuelve una tupla con:
+o	La matriz X transformada (solo con las $k$ columnas elegidas).
+o	Una lista con los nombres de las columnas originales que fueron seleccionadas.
