@@ -8,5 +8,5 @@ Escribe una función llamada seleccionar_mejores_caracteristicas(df, target_col,
 3.	Selección: Utiliza la clase SelectKBest junto con la métrica f_regression de sklearn.feature_selection para identificar las k mejores características que tienen mayor relación estadística con el target.
 4.	Transformación: Aplica la selección para obtener una nueva matriz X reducida.
 5.	Resultado: Devuelve una tupla con:
-o	La matriz X transformada (solo con las $k$ columnas elegidas).
-o	Una lista con los nombres de las columnas originales que fueron seleccionadas.
+	La matriz X transformada (solo con las $k$ columnas elegidas).
+	Una lista con los nombres de las columnas originales que fueron seleccionadas.
