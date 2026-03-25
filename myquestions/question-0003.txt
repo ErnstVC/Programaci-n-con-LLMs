@@ -5,11 +5,11 @@ Tu Misión:
 Escribe una función llamada evaluar_clasificador_cultivos(df, target_col) que use Pandas, Numpy y Sklearn para:
 1.	División: Separa los datos en entrenamiento (70%) y prueba (30%) usando un random_state=42 y asegúrate de usar estratificación (stratify=y) para mantener la proporción de las clases.
 2.	Pipeline de Entrenamiento:
-o	Usa un RandomForestClassifier con 50 estimadores.
+	Usa un RandomForestClassifier con 50 estimadores.
 3.	Evaluación Detallada:
-o	Calcula la Matriz de Confusión usando los datos de prueba.
-o	Extrae de la matriz la cantidad de Falsos Positivos (FP) totales (la suma de todos los elementos fuera de la diagonal principal que no pertenecen a la predicción correcta).
+	Calcula la Matriz de Confusión usando los datos de prueba.
+	Extrae de la matriz la cantidad de Falsos Positivos (FP) totales (la suma de todos los elementos fuera de la diagonal principal que no pertenecen a la predicción correcta).
 4.	Resultado: La función debe devolver un diccionario con:
-o	La precisión global (accuracy_score).
-o	La matriz de confusión (como array de numpy).
-o	El número total de errores de clasificación (suma de predicciones incorrectas).
+	La precisión global (accuracy_score).
+	La matriz de confusión (como array de numpy).
+	El número total de errores de clasificación (suma de predicciones incorrectas).
