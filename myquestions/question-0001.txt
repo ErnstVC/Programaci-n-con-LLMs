@@ -5,10 +5,10 @@ Tu Misión:
 Escribe una función llamada detectar_anomalias_energeticas(df) que realice lo siguiente:
 1.	Limpieza con Pandas: Elimine cualquier fila que tenga el valor objetivo ('consumo_kwh') como nulo.
 2.	Preprocesamiento con Sklearn:
-o	Para la columna numérica 'temperatura_ambiente', rellena nulos con el promedio.
-o	Para la columna categórica 'tipo_tarifa', aplica One-Hot Encoding.
-o	Combina ambos pasos usando un ColumnTransformer.
+	Para la columna numérica 'temperatura_ambiente', rellena nulos con el promedio.
+	Para la columna categórica 'tipo_tarifa', aplica One-Hot Encoding.
+  Combina ambos pasos usando un ColumnTransformer.
 3.	Detección con Numpy & Sklearn:
-o	Entrena un modelo de Isolation Forest (de sklearn.ensemble) con los datos transformados.
-o	Usa el modelo para predecir si cada registro es normal (1) o una anomalía (-1).
+	Entrena un modelo de Isolation Forest (de sklearn.ensemble) con los datos transformados.
+	Usa el modelo para predecir si cada registro es normal (1) o una anomalía (-1).
 4.	Resultado: Agrega una nueva columna al DataFrame original llamada 'es_anomalia' con estos resultados y devuelve el DataFrame final.
