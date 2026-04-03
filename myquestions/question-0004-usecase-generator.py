@@ -13,7 +13,7 @@ def generar_caso_de_uso_tuning():
     # 1. Generar datos con una estructura no lineal (forma de medias lunas)
     # Esto hará que el kernel 'rbf' suela ganar sobre el 'linear'
     n_muestras = np.random.randint(60, 100)
-    ruido = np.random.uniform(0.1, 0.2)
+    ruido = np.random.uniform(0.15, 0.25)
     X_np, y_np = make_moons(n_samples=n_muestras, noise=ruido, random_state=42)
     
     # Convertir a DataFrame de Pandas para el input
@@ -28,7 +28,7 @@ def generar_caso_de_uso_tuning():
     
     # Ejecutamos la búsqueda para conocer la respuesta correcta
     # Usamos cv=3 como se especificó en la misión
-    grid_search = GridSearchCV(SVC(), param_grid, cv=3, scoring='accuracy')
+    grid_search = GridSearchCV(SVC(random_state=42), param_grid, cv=3, scoring='accuracy')
     grid_search.fit(X_np, y_np)
     
     # 2. Estructurar el retorno
