@@ -41,7 +41,7 @@ def generar_caso_de_uso_seleccion_caracteristicas():
             df.loc[idx_nulos, col] = np.nan
 
     # --- CÁLCULO DEL OUTPUT ESPERADO ---
-    k = 2
+    k = np.random.randint(2, 4)
     X = df.drop(columns=['target_real'])
     y = df['target_real']
     
