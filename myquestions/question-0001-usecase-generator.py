@@ -2,67 +2,93 @@
 import pandas as pd
 import numpy as np
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import IsolationForest
 
-def generar_caso_de_uso_preparar_datos():
+def generar_caso_detectar_anomalias():
     """
-    Genera un caso de uso aleatorio (input/output) para la función preparar_datos.
-    El input contiene un DataFrame con nulos y escalas variadas.
-    El output contiene los arrays de numpy procesados (Imputación + Escalado).
+    Genera un caso de prueba para la función detectar_anomalias_energeticas.
+    
+    INPUT:
+        - DataFrame con:
+            consumo_kwh (con algunos nulos)
+            temperatura_ambiente (con algunos nulos)
+            tipo_tarifa (categórica)
+    
+    OUTPUT:
+        - DataFrame con columna 'es_anomalia'
     """
-    # 1. Configuración aleatoria del dataset
-    n_rows = np.random.randint(5, 11)  # Entre 5 y 10 filas
-    n_cols = np.random.randint(2, 5)   # Entre 2 y 4 características + 1 target
     
-    # Crear nombres de columnas
-    cols = [f'feature_{i}' for i in range(n_cols)]
-    target_col = 'target'
+    # 1. Tamaño del dataset
+    n_rows = np.random.randint(15, 26)
     
-    # 2. Generar datos numéricos aleatorios con diferentes escalas
-    # Usamos una media y desviación estándar aleatoria para cada columna
-    data = {}
-    for col in cols:
-        mu = np.random.uniform(10, 100)
-        sigma = np.random.uniform(1, 10)
-        values = np.random.normal(mu, sigma, n_rows)
-        
-        # Introducir 1 o 2 valores NaN aleatoriamente por columna
-        nan_indices = np.random.choice(n_rows, size=np.random.randint(1, 3), replace=False)
-        values[nan_indices] = np.nan
-        data[col] = values
-    
-    # Generar el target (sin nulos, según estándares de ML)
-    data[target_col] = np.random.randint(0, 2, n_rows)
-    
-    df_input = pd.DataFrame(data)
-    
-    # --- CÁLCULO DEL OUTPUT ESPERADO ---
-    # Separar X e y
-    X = df_input[cols].values
-    y = df_input[target_col].values
-    
-    # Imputar (Media)
-    imputer = SimpleImputer(strategy='mean')
-    X_imputed = imputer.fit_transform(X)
-    
-    # Escalar (Standard)
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X_imputed)
-    
-    # 3. Estructurar el retorno
-    input_dict = {
-        "df": df_input,
-        "target_col": target_col
+    # 2. Generar datos
+    data = {
+        "consumo_kwh": np.random.normal(300, 50, n_rows),
+        "temperatura_ambiente": np.random.normal(25, 5, n_rows),
+        "tipo_tarifa": np.random.choice(
+            ["residencial", "comercial", "industrial"], n_rows
+        )
     }
     
-    output_tuple = (X_scaled, y)
+    df = pd.DataFrame(data)
     
-    return input_dict, output_tuple
+    # 3. Introducir nulos
+    # consumo_kwh (para probar eliminación)
+    nan_indices = np.random.choice(n_rows, size=2, replace=False)
+    df.loc[nan_indices, "consumo_kwh"] = np.nan
+    
+    # temperatura (para imputación)
+    nan_indices_temp = np.random.choice(n_rows, size=2, replace=False)
+    df.loc[nan_indices_temp, "temperatura_ambiente"] = np.nan
+    
+    # 4. Introducir anomalías (valores extremos)
+    n_outliers = max(1, n_rows // 10)
+    outlier_indices = np.random.choice(n_rows, size=n_outliers, replace=False)
+    df.loc[outlier_indices, "consumo_kwh"] *= 5  # consumo exagerado
+    
+    # ---------------- OUTPUT ESPERADO ----------------
+    
+    # 5. Limpieza
+    df_clean = df.dropna(subset=["consumo_kwh"]).copy()
+    
+    # 6. Columnas
+    num_col = ["temperatura_ambiente"]
+    cat_col = ["tipo_tarifa"]
+    
+    # 7. Transformaciones
+    preprocessor = ColumnTransformer(
+        transformers=[
+            ("num", SimpleImputer(strategy="mean"), num_col),
+            ("cat", OneHotEncoder(handle_unknown="ignore"), cat_col)
+        ]
+    )
+    
+    X = preprocessor.fit_transform(df_clean)
+    
+    # 8. Modelo de detección de anomalías
+    modelo = IsolationForest(random_state=42)
+    preds = modelo.fit_predict(X)
+    
+    # 9. Agregar resultado
+    df_clean["es_anomalia"] = preds
+    
+    # 10. Estructura final
+    input_dict = {
+        "df": df
+    }
+    
+    output_df = df_clean
+    
+    return input_dict, output_df
 
-# Ejemplo de ejecución
-entrada, salida_esperada = generar_caso_de_uso_preparar_datos()
 
-print("--- INPUT (DataFrame con nulos) ---")
-print(entrada['df'])
-print("\n--- OUTPUT (X_scaled primera fila) ---")
-print(salida_esperada[0][0])
+# Ejemplo de uso
+entrada, salida_esperada = generar_caso_detectar_anomalias()
+
+print("---- INPUT ----")
+print(entrada["df"])
+
+print("\n---- OUTPUT ----")
+print(salida_esperada.head())
