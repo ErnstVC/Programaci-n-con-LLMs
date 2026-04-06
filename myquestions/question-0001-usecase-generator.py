@@ -6,7 +6,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import IsolationForest
 
-def generar_caso_detectar_anomalias():
+def generar_caso_de_uso_anomalias():
     """
     Genera un caso de prueba para la función detectar_anomalias_energeticas.
     
