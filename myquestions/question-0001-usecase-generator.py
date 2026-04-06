@@ -85,8 +85,7 @@ def generar_caso_de_uso_anomalias():
 
 
 # Ejemplo de uso
-entrada, salida_esperada = generar_caso_detectar_anomalias()
-
+entrada, salida_esperada = generar_caso_de_uso_anomalias()
 print("---- INPUT ----")
 print(entrada["df"])
 
