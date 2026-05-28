@@ -11,4 +11,8 @@ Diagnostico de las preguntas asignadas:
 
 Según el validador indicado por el profesor las preguntas 0227 y 0611 presentan errores en los generadores de casos de usos:
 
-   - Pregunta 0227 : El generador presenta la  entrenar_modelo_calibrado_texto_numerico()sin los 4 argumentos obligatorios necesarios.
+   - Pregunta 0227 : El generador presenta la  entrenar_modelo_calibrado_texto_numerico()sin los 4 argumentos obligatorios necesarios,
+                     por lo que se debio agregar al generador de caso def entrenar_modelo_calibrado_texto_numerico(df, text_col,                               num_cols, target_col, test_size=0.2, random_state=42).
+   - Pregunta 0227  : Presenta el mismo error que la pregunta anterior, falta de 2 argumentos en la función                                                    _estimar_densidad_kde_referencia() por lo que se debio agregar _estimar_densidad_kde_referencia(df,value_col).
+                      
+
